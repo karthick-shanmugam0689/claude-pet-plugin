@@ -11,6 +11,26 @@ the moment you switch to another app, and is fun to poke at.
 
 ---
 
+## Screenshots
+
+<!-- To add screenshots: open this file in GitHub's web editor (pencil icon),
+     delete a placeholder line below, and drag the image onto that spot —
+     GitHub uploads it and inserts the markdown automatically. -->
+
+**Per-session token bubbles + live reactions**
+
+_drop the bubbles screenshot here_
+
+**Pick your pet from the menubar**
+
+_drop the menubar screenshot here_
+
+**Stats panel — feed, play, nap (happiness · fullness · energy)**
+
+_drop the stats-panel screenshot here_
+
+---
+
 ## Install
 
 ```text
