@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Claude Pet</title>
+
+  <link rel="stylesheet" href="styles/base.css" />
+  <link rel="stylesheet" href="styles/pet.css" />
+  <link rel="stylesheet" href="styles/moods.css" />
+  <link rel="stylesheet" href="styles/desktop.css" />
+  <!-- pet skins (override the default look under body.theme-<id>) -->
+  <link rel="stylesheet" href="styles/pets/cat.css" />
+  <link rel="stylesheet" href="styles/pets/tiger.css" />
+  <link rel="stylesheet" href="styles/pets/mouse.css" />
+</head>
+<body>
+  <div id="wrap">
+    <!-- session bubbles: in-memory only, one per session, dismissable -->
+    <div class="bubbles" id="bubbles"></div>
+
+    <div class="scene">
+      <div class="speech" id="speech"></div>
+      <div class="pet" id="pet" title="Click to pet me!">
+        <div class="ear left"></div>
+        <div class="ear right"></div>
+        <div class="body"></div>
+        <div class="eyes"><div class="eye"></div><div class="eye"></div></div>
+        <div class="cheek left"></div>
+        <div class="cheek right"></div>
+        <div class="mouth"></div>
+        <div class="whiskers">
+          <svg viewBox="0 0 150 62" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M58 30 Q40 25 18 22" /><path d="M57 34 Q38 34 16 35" /><path d="M58 38 Q40 44 18 48" />
+            <path d="M92 30 Q110 25 132 22" /><path d="M93 34 Q112 34 134 35" /><path d="M92 38 Q110 44 132 48" />
+          </svg>
+        </div>
+        <div class="zzz">z</div>
+      </div>
+      <div class="shadow"></div>
+    </div>
+
+    <div class="panel">
+      <button class="collapse" id="collapse-btn" title="Hide stats">▾</button>
+      <div class="name" id="name">Pip</div>
+
+      <div class="stat">
+        <div class="stat-label"><span>Happiness</span><span id="happiness-val">80%</span></div>
+        <div class="bar"><div class="fill happiness" id="happiness-bar"></div></div>
+      </div>
+      <div class="stat">
+        <div class="stat-label"><span>Fullness</span><span id="hunger-val">70%</span></div>
+        <div class="bar"><div class="fill hunger" id="hunger-bar"></div></div>
+      </div>
+      <div class="stat">
+        <div class="stat-label"><span>Energy</span><span id="energy-val">90%</span></div>
+        <div class="bar"><div class="fill energy" id="energy-bar"></div></div>
+      </div>
+
+      <div class="buttons">
+        <button id="feed-btn">Feed</button>
+        <button id="play-btn">Play</button>
+        <button id="sleep-btn">Nap</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="hint">Click the pet to pet it. It gets hungry and tired over time.</div>
+
+  <script type="module" src="scripts/main.js"></script>
+</body>
+</html>

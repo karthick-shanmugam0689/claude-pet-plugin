@@ -1,0 +1,8 @@
+{
+  "name": "claude-pet",
+  "version": "0.1.0",
+  "description": "Pip — a floating desktop pet (macOS) that reacts to your Claude Code session: gets busy while Claude works, celebrates when a turn finishes, shows per-session token-usage bubbles, and hides the moment you switch apps.",
+  "author": {
+    "name": "Karthick Shanmugam"
+  }
+}

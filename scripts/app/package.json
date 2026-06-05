@@ -1,0 +1,24 @@
+{
+  "name": "claude-pet",
+  "version": "0.1.0",
+  "description": "A desktop pet that lives alongside Claude Code",
+  "main": "dist/main/index.js",
+  "bin": {
+    "claude-pet": "./dist/cli/index.js"
+  },
+  "scripts": {
+    "build:node": "tsc -p tsconfig.node.json",
+    "build:web": "tsc -p tsconfig.web.json",
+    "build:assets": "mkdir -p dist/renderer/styles/pets && cp src/renderer/index.html dist/renderer/ && cp src/renderer/styles/*.css dist/renderer/styles/ && cp src/renderer/styles/pets/*.css dist/renderer/styles/pets/",
+    "build": "npm run build:node && npm run build:web && npm run build:assets",
+    "watch": "npm run build:assets && (tsc -p tsconfig.node.json -w & tsc -p tsconfig.web.json -w)",
+    "typecheck": "tsc -p tsconfig.node.json --noEmit && tsc -p tsconfig.web.json --noEmit",
+    "start": "npm run build && electron .",
+    "pet": "node dist/cli/index.js"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.19",
+    "electron": "^42.3.0",
+    "typescript": "^5.9.3"
+  }
+}

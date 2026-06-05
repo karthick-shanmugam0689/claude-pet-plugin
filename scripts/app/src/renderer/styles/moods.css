@@ -1,0 +1,68 @@
+/* Mood overrides (happy/sad/sleeping/eating/thinking) and reaction states
+   (hover, glance, yawn, dozing). These layer on top of the base pet anatomy
+   in pet.css and are toggled by the renderer scripts. */
+
+/* ===== Moods ===== */
+.pet.happy .mouth,
+.pet.excited .mouth {
+  width: 30px; height: 15px; background: transparent;
+  border: 0; border-bottom: 5px solid var(--ink);
+  border-bottom-left-radius: 22px;
+  border-bottom-right-radius: 22px;
+}
+.pet.happy .cheek,
+.pet.excited .cheek { opacity: .85; }
+
+.pet.sad .mouth {
+  width: 26px; height: 13px; background: transparent;
+  border: 0; border-top: 5px solid var(--ink);
+  border-top-left-radius: 22px;
+  border-top-right-radius: 22px;
+  top: 82px;
+}
+.pet.sad .eye { animation: none; height: 19px; }
+
+.pet.eating .mouth {
+  width: 20px; height: 22px;
+  background: #7a3b5d;
+  border-radius: 50%;
+}
+
+.pet.sleeping .eye {
+  animation: none;
+  height: 4px;
+  border-radius: 4px;
+  top: 8px;
+}
+.pet.sleeping .mouth { width: 12px; height: 4px; }
+.pet.sleeping .body  { animation: breathe 4.8s ease-in-out infinite; }
+.pet.sleeping .zzz   { animation: floatZ 2.6s ease-in-out infinite; }
+
+/* "thinking" while Claude Code is working: pupils glance up */
+.pet.thinking .eye::after { top: 2px; left: 6px; }
+
+/* ===== Reactions ===== */
+
+/* hover: ears perk up */
+.pet:hover .ear.left  { transform: rotate(-28deg) translateY(-3px); }
+.pet:hover .ear.right { transform: rotate(28deg)  translateY(-3px); }
+
+/* idle glance (pupils slide) */
+.pet.glance-left  .eye::after { left: 0;   }
+.pet.glance-right .eye::after { left: 7px; }
+
+/* idle yawn */
+.pet.yawning .mouth {
+  width: 26px; height: 28px;
+  background: #7a3b5d;
+  border-radius: 50%;
+  transition: width .2s ease, height .2s ease;
+}
+
+/* drowsy half-blink (between awake and asleep) */
+.pet.dozing .eye {
+  animation: none;
+  height: 5px;
+  border-radius: 4px;
+  top: 8px;
+}

@@ -1,0 +1,53 @@
+/* Tiger ("Tora") = orange palette + stripes + cream muzzle + pointy ears
+   + shared whiskers. */
+body.theme-tiger {
+  --pet: #f5933a;
+  --pet-dark: #e07a26;
+  --pet-hi: #ffb05a;
+  --inner-ear: #d98b53;
+  --whisker: rgba(43, 36, 64, 0.4);
+}
+
+/* stripes across the head, clipped to the body shape (signature) */
+body.theme-tiger .body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: repeating-linear-gradient(
+    95deg,
+    transparent 0 16px,
+    rgba(43, 36, 64, 0.5) 16px 20px
+  );
+}
+
+/* cream muzzle on the lower face, over the stripes (signature) */
+body.theme-tiger .body::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  width: 76px;
+  height: 52px;
+  background: #ffe6c9;
+  border-radius: 50% 50% 48% 48%;
+}
+
+/* pointy ears */
+body.theme-tiger .ear { width: 30px; height: 34px; border-radius: 50% 50% 14% 14%; }
+body.theme-tiger .ear.left { left: 14px; transform: rotate(-20deg); }
+body.theme-tiger .ear.right { right: 14px; transform: rotate(20deg); }
+body.theme-tiger .ear::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 12px;
+  transform: translateX(-50%);
+  width: 11px;
+  height: 13px;
+  background: var(--inner-ear);
+  border-radius: 50%;
+}
+
+body.theme-tiger .whiskers { display: block; }

@@ -1,0 +1,53 @@
+/* Mouse ("Squeak") = grey palette + big round ears + pink nose + curly tail
+   + shared whiskers. */
+body.theme-mouse {
+  --pet: #b6bcc6;
+  --pet-dark: #98a0ad;
+  --pet-hi: #d2d6dd;
+  --inner-ear: #f3aeb6;
+}
+
+/* big round ears (signature) */
+body.theme-mouse .ear { width: 46px; height: 46px; top: -20px; border-radius: 50%; }
+body.theme-mouse .ear.left { left: 4px; transform: rotate(0deg); }
+body.theme-mouse .ear.right { right: 4px; transform: rotate(0deg); }
+body.theme-mouse .ear::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 26px;
+  height: 26px;
+  background: var(--inner-ear);
+  border-radius: 50%;
+}
+
+/* pink nose (signature) */
+body.theme-mouse .body::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 72px;
+  transform: translateX(-50%);
+  width: 13px;
+  height: 9px;
+  background: #e87b94;
+  border-radius: 50%;
+}
+
+/* curly tail off the lower-right (signature) */
+body.theme-mouse .body::after {
+  content: "";
+  position: absolute;
+  right: -20px;
+  bottom: 16px;
+  width: 22px;
+  height: 30px;
+  border: 3px solid var(--ink);
+  border-top: none;
+  border-left: none;
+  border-radius: 0 40% 60% 0;
+}
+
+body.theme-mouse .whiskers { display: block; }

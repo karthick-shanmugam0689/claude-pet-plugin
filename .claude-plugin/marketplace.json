@@ -1,0 +1,16 @@
+{
+  "name": "claude-pets",
+  "owner": {
+    "name": "Karthick Shanmugam"
+  },
+  "description": "Pip — a desktop pet for Claude Code.",
+  "plugins": [
+    {
+      "name": "claude-pet",
+      "source": "./",
+      "description": "Pip — a floating desktop pet (macOS) for Claude Code. Reacts to your session, shows per-session token bubbles, and hides when Claude Code isn't focused.",
+      "category": "fun",
+      "tags": ["pet", "desktop", "macos", "fun", "tamagotchi"]
+    }
+  ]
+}

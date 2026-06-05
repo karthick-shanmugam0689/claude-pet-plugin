@@ -1,0 +1,215 @@
+/* Base layout: typography, scene container, speech bubble, stats panel,
+   buttons, the dev-mode hint. Pet anatomy and mood styles live in pet.css
+   and moods.css. */
+:root {
+  --ink: #2b2440;
+  /* pet palette — each skin overrides these (see styles/pets/*.css) */
+  --pet: #c98a5e;        /* main fur */
+  --pet-dark: #a86b43;   /* gradient base + ears */
+  --pet-hi: #e0a575;     /* radial highlight */
+  --inner-ear: #c96a2c;  /* inner-ear fill */
+  --whisker: rgba(43, 36, 64, 0.5);
+  --panel: rgba(255, 255, 255, 0.7);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--ink);
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+body {
+  background: radial-gradient(circle at 50% 30%, #fdf3e7 0%, #f3dcc4 60%, #e9c9a6 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  overflow: hidden;
+}
+
+/* ---------- Scene ---------- */
+.scene {
+  position: relative;
+  width: 260px;
+  height: 240px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.speech {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity .25s, transform .25s;
+  pointer-events: none;
+  box-shadow: 0 4px 0 rgba(43, 36, 64, .15);
+}
+/* Tail: an ink-outline triangle (::before) with a white fill (::after) on top,
+   so it reads as part of the bubble (matching its 2px border) rather than a
+   solid dark spike. */
+.speech::before,
+.speech::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-color: transparent;
+  transform: translateX(-50%);
+}
+.speech::before {
+  border-width: 9px 8px 0 8px;
+  border-top-color: var(--ink);
+}
+.speech::after {
+  border-width: 7px 6px 0 6px;
+  border-top-color: #fff;
+  margin-top: -2px; /* overlap the bubble's bottom border so the fill connects */
+}
+.speech.show { opacity: 1; transform: translateX(-50%) translateY(-14px); }
+
+/* ---------- Stats panel ---------- */
+.panel {
+  position: relative;
+  width: 280px;
+  background: var(--panel);
+  backdrop-filter: blur(8px);
+  border: 2px solid var(--ink);
+  border-radius: 18px;
+  padding: 14px 16px;
+  box-shadow: 0 6px 0 rgba(43, 36, 64, .12);
+}
+.name {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 10px;
+  letter-spacing: .5px;
+}
+.stat { margin-bottom: 9px; }
+.stat-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin-bottom: 3px;
+  opacity: .8;
+}
+.bar {
+  height: 12px;
+  background: rgba(43, 36, 64, .12);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.fill {
+  height: 100%;
+  border-radius: 8px;
+  transition: width .4s ease, background .4s ease;
+}
+.fill.happiness { background: #ef6f8e; }
+.fill.hunger    { background: #f0a830; }
+.fill.energy    { background: #5bc6c0; }
+
+.buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+button {
+  flex: 1;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  padding: 9px 4px;
+  cursor: pointer;
+  box-shadow: 0 3px 0 rgba(43, 36, 64, .2);
+  transition: transform .08s, box-shadow .08s;
+}
+button:hover { background: #fff7ee; }
+button:active { transform: translateY(2px); box-shadow: 0 1px 0 rgba(43, 36, 64, .2); }
+
+/* session bubbles — transient, dismissable token/usage cards for each Claude
+   Code session. Held only in the renderer's memory; nothing is persisted. */
+.bubbles {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 280px;
+  margin-bottom: 10px;
+}
+.bubbles:empty { display: none; }
+.bubble {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+  padding: 8px 10px;
+  box-shadow: 0 3px 0 rgba(43, 36, 64, .15);
+  transition: opacity .16s ease, transform .16s ease;
+}
+.bubble.removing { opacity: 0; transform: scale(.92); pointer-events: none; }
+.bubble.pop { animation: bubble-pop .25s ease; }
+@keyframes bubble-pop {
+  from { transform: scale(.92); opacity: .4; }
+  to   { transform: scale(1); opacity: 1; }
+}
+.bubble-text { flex: 1; min-width: 0; text-align: left; line-height: 1.35; }
+.bubble-title {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bubble-meta {
+  font-size: 11px;
+  font-weight: 700;
+  opacity: .6;
+  font-variant-numeric: tabular-nums;
+}
+.bubble-x {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  font-size: 10px;
+  line-height: 1;
+  border-radius: 9px;
+  border: 1.5px solid var(--ink);
+  background: #fff;
+  box-shadow: none;
+}
+.bubble-x:active { transform: none; box-shadow: none; }
+
+.hint {
+  font-size: 12px;
+  opacity: .55;
+  text-align: center;
+}

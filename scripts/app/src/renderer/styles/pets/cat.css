@@ -1,0 +1,25 @@
+/* Cat ("Mochi") = grey palette + pointy ears + shared whiskers. */
+body.theme-cat {
+  --pet: #b6bcc6;
+  --pet-dark: #949bab;
+  --pet-hi: #d9dde4;
+  --inner-ear: #ef9aa0;
+}
+
+/* pointy ears (shape only — colour comes from the palette vars) */
+body.theme-cat .ear { width: 28px; height: 38px; border-radius: 50% 50% 12% 12%; }
+body.theme-cat .ear.left { left: 16px; transform: rotate(-22deg); }
+body.theme-cat .ear.right { right: 16px; transform: rotate(22deg); }
+body.theme-cat .ear::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 10px;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 18px;
+  background: var(--inner-ear);
+  border-radius: 50% 50% 30% 30%;
+}
+
+body.theme-cat .whiskers { display: block; }

@@ -1,0 +1,59 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "async": true,
+            "command": "[ -f \"${CLAUDE_PLUGIN_ROOT}/scripts/app/dist/cli/index.js\" ] && node \"${CLAUDE_PLUGIN_ROOT}/scripts/app/cli.js\" start 2>/dev/null || true"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "async": true,
+            "command": "[ -f \"${CLAUDE_PLUGIN_ROOT}/scripts/app/dist/cli/index.js\" ] && node \"${CLAUDE_PLUGIN_ROOT}/scripts/app/cli.js\" end 2>/dev/null || true"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "async": true,
+            "command": "[ -f \"${CLAUDE_PLUGIN_ROOT}/scripts/app/dist/cli/index.js\" ] && node \"${CLAUDE_PLUGIN_ROOT}/scripts/app/cli.js\" event busy 2>/dev/null || true"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "async": true,
+            "command": "[ -f \"${CLAUDE_PLUGIN_ROOT}/scripts/app/dist/cli/index.js\" ] && node \"${CLAUDE_PLUGIN_ROOT}/scripts/app/cli.js\" event done 2>/dev/null || true"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "async": true,
+            "command": "[ -f \"${CLAUDE_PLUGIN_ROOT}/scripts/app/dist/cli/index.js\" ] && node \"${CLAUDE_PLUGIN_ROOT}/scripts/app/cli.js\" event waiting 2>/dev/null || true"
+          }
+        ]
+      }
+    ]
+  }
+}

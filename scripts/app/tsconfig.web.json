@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ES2022",
+    "moduleResolution": "Bundler",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": [],
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": [
+    "src/renderer/scripts/**/*.ts",
+    "src/renderer/scripts/**/*.d.ts"
+  ]
+}

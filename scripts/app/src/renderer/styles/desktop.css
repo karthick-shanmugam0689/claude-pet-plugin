@@ -1,0 +1,45 @@
+/* Overrides applied only in desktop (Electron) mode — wired by scripts/bridge.ts
+   via body.desktop. They make the page transparent, hide the dev-mode hint, and
+   provide the collapsed + hidden states. Window dragging is handled in JS
+   (scripts/drag.ts), not -webkit-app-region, so the pet keeps click + hover. */
+
+body.desktop {
+  background: transparent;
+  cursor: grab;
+  /* Bottom-anchor content to match the window's bottom-right resize anchor.
+     Otherwise, when content height changes (a bubble is added or dismissed),
+     the centered layout re-centers a frame before the window resizes — making
+     the pet visibly jump up and snap back. Anchoring to the bottom keeps the
+     pet fixed through the resize. */
+  justify-content: flex-end;
+}
+body.desktop.dragging { cursor: grabbing; }
+body.desktop .hint { display: none; }
+
+/* Wrap = the measurable content the window resizes to fit */
+#wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+body.desktop #wrap { padding-top: 20px; } /* room for the speech bubble */
+
+/* Collapse button (top-right of the stats panel) */
+.collapse {
+  position: absolute;
+  top: 8px; right: 10px;
+  width: 22px; height: 22px;
+  flex: none;
+  padding: 0;
+  font-size: 11px;
+  line-height: 1;
+  border-radius: 50%;
+  box-shadow: 0 2px 0 rgba(43, 36, 64, .2);
+}
+
+/* Compact view: only the pet is visible */
+body.collapsed .panel { display: none; }
+
+/* Hidden state (focus left Claude Code or user dismissed): no paint, no clicks */
+body.pet-hidden { visibility: hidden; }
