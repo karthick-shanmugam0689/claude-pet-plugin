@@ -112,6 +112,33 @@ other tab).
 
 ---
 
+## Security & privacy
+
+Pip is built to be unobtrusive and auditable:
+
+- **No network at runtime, no telemetry.** The app only renders local HTML in
+  Electron — it makes no outbound requests. The single network access is the
+  one-time `npm install` during `/claude-pet:pet-setup`, which fetches Electron +
+  TypeScript from the npm registry (pinned via `package-lock.json`).
+- **Reads, never transmits, your transcript.** When a turn finishes, the CLI
+  reads the session transcript **locally** only to extract the session title and
+  token counts shown in the bubble. Nothing is sent anywhere; the title/tokens
+  live in memory and are not persisted.
+- **Minimal, owner-only filesystem use.** Runtime files (pid, host, last event,
+  per-session markers) live under `$TMPDIR/claude-pet/` at `0700` permissions.
+  The plugin writes nowhere else outside its own directory.
+- **Hardened inputs.** Hook events are checked against a fixed allowlist
+  (`busy | done | waiting | hello | idle`); the session id is sanitised before
+  use as a filename; the git project-name lookup uses `execFile` (no shell), so a
+  working-directory path can't inject a command. The renderer runs under a strict
+  Content-Security-Policy (`default-src 'self'`).
+- **No bundled binaries.** Electron's runtime is fetched at setup, never
+  committed to the repo.
+- **Dependencies:** `electron` + `typescript` + `@types/node` only — `npm audit`
+  reports **0 vulnerabilities**.
+
+---
+
 ## How it works
 
 Lifecycle **hooks** are shell commands, so they can't talk to the running app

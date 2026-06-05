@@ -6,5 +6,6 @@
     "name": "Karthick Shanmugam"
   },
   "homepage": "https://github.com/karthick-shanmugam0689/claude-pet-plugin",
-  "repository": "https://github.com/karthick-shanmugam0689/claude-pet-plugin"
+  "repository": "https://github.com/karthick-shanmugam0689/claude-pet-plugin",
+  "license": "MIT"
 }
