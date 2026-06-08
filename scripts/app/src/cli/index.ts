@@ -55,24 +55,50 @@ interface StopHook {
   session_id?: string;
 }
 
-// Friendly fall-back name when a session has no AI title yet. Use the git
-// project (main repo) name rather than basename(cwd), so a git worktree shows
-// the real project ("claude-pets") instead of its random worktree folder
-// ("nostalgic-colden-5509ad"). execFileSync (no shell) keeps cwd injection-safe.
+// Last-resort label when a session has neither an AI title nor a usable first
+// prompt: the git project (main repo) name rather than basename(cwd), so a git
+// worktree shows the real project ("claude-pets") not its random worktree
+// folder ("nostalgic-colden-5509ad"). execFileSync (no shell) + --path-format=
+// absolute (git returns an absolute path, so the hook-supplied cwd never enters
+// path.resolve/join) keep this free of any path-traversal sink.
 function projectName(cwd: string): string {
   try {
-    const common = execFileSync("git", ["-C", cwd, "rev-parse", "--git-common-dir"], {
-      encoding: "utf8",
-      stdio: ["ignore", "pipe", "ignore"],
-    }).trim();
-    if (common) {
-      const gitDir = path.resolve(cwd, common); // .../claude-pets/.git
-      return path.basename(path.dirname(gitDir)); // -> claude-pets
-    }
+    const common = execFileSync(
+      "git",
+      ["-C", cwd, "rev-parse", "--path-format=absolute", "--git-common-dir"],
+      { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] },
+    ).trim();
+    if (common) return path.basename(path.dirname(common)); // .../claude-pets/.git -> claude-pets
   } catch {
     /* not a git repo, or git unavailable */
   }
   return path.basename(cwd);
+}
+
+// When a session has no AI title yet, fall back to its first real user prompt
+// (truncated) — far more useful than the repo name. Skips wrapped command /
+// system / caveat messages (they start with "<").
+function firstUserPrompt(text: string): string | undefined {
+  type Block = { type?: string; text?: string };
+  const lines = text.split("\n");
+  const max = Math.min(lines.length, 400);
+  for (let i = 0; i < max; i++) {
+    if (!lines[i].includes('"type":"user"')) continue;
+    try {
+      const rec = JSON.parse(lines[i]) as { message?: { content?: unknown } };
+      const c = rec.message?.content;
+      let s: string | undefined;
+      if (typeof c === "string") s = c;
+      else if (Array.isArray(c)) s = (c as Block[]).find((b) => b?.type === "text" && typeof b.text === "string")?.text;
+      if (!s) continue;
+      s = s.trim();
+      if (!s || s.startsWith("<")) continue; // skip command/system wrappers
+      return s.length > 50 ? `${s.slice(0, 49).trimEnd()}…` : s;
+    } catch {
+      /* skip non-JSON line */
+    }
+  }
+  return undefined;
 }
 
 // The hook pipes its JSON on stdin. Don't block an interactive (TTY) run.
@@ -110,6 +136,9 @@ function deriveDoneExtras(): Record<string, number | string> {
           title = m[1];
         }
       }
+
+      // No AI/custom title yet → use the first user prompt as a friendlier label.
+      if (!title) title = firstUserPrompt(text);
 
       // Usage: the latest record is always at the very end, so only the tail
       // needs parsing.
