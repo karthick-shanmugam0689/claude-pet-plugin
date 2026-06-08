@@ -113,6 +113,19 @@ it to a specific app, set `CLAUDE_PET_HOST` (comma-separated) in
 Browsers are never treated as the host (macOS can't tell a Claude tab from any
 other tab).
 
+### Other environment variables
+
+Also under `env` in `~/.claude/settings.json`:
+
+- **`CLAUDE_PET_FIRST_PROMPT_TITLE=0`** — when a session has no AI/custom title
+  yet, Pip labels the bubble with the session's **first prompt** (truncated).
+  Set this to `0` (or `off` / `false`) to fall back to the **project name**
+  instead, so no prompt text is shown in the widget. (Either way the data stays
+  on-device — read locally, never transmitted.)
+- **`CLAUDE_PET_CONTEXT_WINDOW=1000000`** — context-window size used for the
+  fullness `%`. Defaults to an estimate (200k, bumped to 1M once a turn exceeds
+  200k); set it to your model's real window for an exact percentage.
+
 ---
 
 ## Updating

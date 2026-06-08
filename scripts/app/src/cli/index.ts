@@ -138,7 +138,10 @@ function deriveDoneExtras(): Record<string, number | string> {
       }
 
       // No AI/custom title yet → use the first user prompt as a friendlier label.
-      if (!title) title = firstUserPrompt(text);
+      // Privacy opt-out: CLAUDE_PET_FIRST_PROMPT_TITLE=0/off/false skips this and falls
+      // back to the project name (no conversation snippet shown in the bubble).
+      const promptLabel = !/^(0|false|off|no)$/i.test((process.env.CLAUDE_PET_FIRST_PROMPT_TITLE ?? "").trim());
+      if (!title && promptLabel) title = firstUserPrompt(text);
 
       // Usage: the latest record is always at the very end, so only the tail
       // needs parsing.
