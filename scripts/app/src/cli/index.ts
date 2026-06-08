@@ -154,11 +154,17 @@ function deriveDoneExtras(): Record<string, number | string> {
         }
       }
       if (usage) {
-        extras.contextTokens =
+        const ctx =
           (usage.input_tokens ?? 0) +
           (usage.cache_read_input_tokens ?? 0) +
           (usage.cache_creation_input_tokens ?? 0);
+        extras.contextTokens = ctx;
         extras.outputTokens = usage.output_tokens ?? 0;
+        // Context window for the fullness %. The transcript doesn't record it,
+        // so: explicit CLAUDE_PET_CONTEXT_WINDOW wins; otherwise infer — a turn
+        // above 200k can only be a 1M-context model, else assume 200k.
+        const envWin = Number(process.env.CLAUDE_PET_CONTEXT_WINDOW);
+        extras.contextWindow = envWin > 0 ? envWin : ctx > 200_000 ? 1_000_000 : 200_000;
       }
     }
 

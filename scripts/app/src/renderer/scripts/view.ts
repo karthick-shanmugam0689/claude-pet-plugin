@@ -127,9 +127,11 @@ export function pushSessionBubble(ev: PetEvent): void {
   const meta = document.createElement("div");
   meta.className = "bubble-meta";
   const parts: string[] = [];
-  if (ev.contextTokens) parts.push(`${fmtTokens(ev.contextTokens)} ctx`);
-  if (ev.outputTokens) parts.push(`${fmtTokens(ev.outputTokens)} out`);
-  meta.textContent = parts.length ? `🪙 ${parts.join(" · ")}` : "";
+  if (ev.contextTokens && ev.contextWindow)
+    parts.push(`🧠 ${Math.round((ev.contextTokens / ev.contextWindow) * 100)}%`);
+  if (ev.contextTokens) parts.push(`📥 ${fmtTokens(ev.contextTokens)}`);
+  if (ev.outputTokens) parts.push(`📤 ${fmtTokens(ev.outputTokens)}`);
+  meta.textContent = parts.join(" · ");
 
   const text = card.querySelector(".bubble-text") as HTMLElement;
   text.replaceChildren(title, meta);

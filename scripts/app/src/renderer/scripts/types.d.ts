@@ -11,6 +11,7 @@ declare global {
     sessionId?: string;
     title?: string;
     contextTokens?: number;
+    contextWindow?: number;
     outputTokens?: number;
   }
 
