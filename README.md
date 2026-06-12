@@ -13,20 +13,18 @@ the moment you switch to another app, and is fun to poke at.
 
 ## Screenshots
 
+**Stats panel — feed, play, nap (happiness · fullness · energy)**
 
-**Per-session token bubbles + live reactions**
-
-<img width="1277" height="872" alt="Screenshot 2026-06-05 at 14 34 17" src="https://github.com/user-attachments/assets/0e7a8101-238c-42e3-90b3-299e8237c2d9" />
-<img width="425" height="435" alt="Screenshot 2026-06-06 at 01 01 16" src="https://github.com/user-attachments/assets/d0dc00f0-07ae-495a-ab25-551d119ccee6" />
+<img width="310" height="422" alt="Screenshot 2026-06-05 at 14 34 33" src="https://github.com/user-attachments/assets/b88e1be4-1336-4a58-8c4e-89aec9ec1bd7" />
 
 **Pick your pet from the menubar**
 
 <img width="279" height="177" alt="Screenshot 2026-06-05 at 14 34 57" src="https://github.com/user-attachments/assets/d874914a-5442-459e-8a4c-a70073d76100" />
 
-**Stats panel — feed, play, nap (happiness · fullness · energy)**
+**Per-session token bubbles + live reactions**
 
-<img width="310" height="422" alt="Screenshot 2026-06-05 at 14 34 33" src="https://github.com/user-attachments/assets/b88e1be4-1336-4a58-8c4e-89aec9ec1bd7" />
-
+<img width="288" height="399" alt="Screenshot 2026-06-12 at 17 13 26" src="https://github.com/user-attachments/assets/e336a23d-de74-45f0-b4f8-8366d0c07881" />
+<img width="1096" height="957" alt="Screenshot 2026-06-12 at 17 15 10" src="https://github.com/user-attachments/assets/b3ff5441-f275-43e5-8462-151c524a3b41" />
 
 ---
 
