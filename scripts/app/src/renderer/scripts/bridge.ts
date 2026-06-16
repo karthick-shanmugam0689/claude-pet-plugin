@@ -1,11 +1,12 @@
 // Wires the renderer to window.petBridge (exposed by preload). Translates
 // CC events into pet reactions, and toggles the hidden body class when the
 // main process tells us focus changed.
-import { state, clamp } from "./state.js";
+import { state, clamp, markActivity } from "./state.js";
 import { say, spawnFloat, playOnce, render, resizeToContent, pushSessionBubble } from "./view.js";
 
 function applyCc(ev: PetEvent): void {
   const s = ev.state;
+  markActivity(); // any CC event freshens the activity timer + wakes the pet
   if (s === "busy") {
     state.working = true;
     say("on it…");

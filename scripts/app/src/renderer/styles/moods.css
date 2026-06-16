@@ -38,6 +38,14 @@
 .pet.sleeping .body  { animation: breathe 4.8s ease-in-out infinite; }
 .pet.sleeping .zzz   { animation: floatZ 2.6s ease-in-out infinite; }
 
+/* bored: heavy-lidded eyes after a quiet spell (between awake and asleep) */
+.pet.bored .eye {
+  animation: none;
+  height: 9px;
+  border-radius: 5px;
+  top: 7px;
+}
+
 /* "thinking" while Claude Code is working: pupils glance up */
 .pet.thinking .eye::after { top: 2px; left: 6px; }
 
